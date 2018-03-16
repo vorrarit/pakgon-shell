@@ -34,7 +34,11 @@
     "pree2e:protractor": "wait-on http-get://localhost:4200/ && protractor ./protractor.conf.js",
     "e2e": "npm-run-all -p pree2e:build pree2e:protractor"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "electron-tabs": "^0.9.1",
+    "ngx-bootstrap": "^2.0.3"
+  },
   "devDependencies": {
     "@angular/cli": "1.7.1",
     "@angular/common": "5.2.5",

@@ -1,5 +1,26 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
+<form #navForm="ngForm" (ngSubmit)="onSubmit()">
+	<div class="form-row" style="margin-right:1px; margin-left:1px">
+		<div class="col-auto">
+			<div class="btn-group btn-group-sm mt-1 mr-1 ml-1 mb-1" role="group" aria-label="Basic example">
+				<button type="button" class="btn btn-secondary">Left</button>
+				<button type="button" class="btn btn-secondary">Middle</button>
+				<button type="button" class="btn btn-secondary">Right</button>
+			</div>
+		</div>
+		<div class="col">
+			<div class="input-group input-group-sm mt-1 mb-1 mr-3">
+				<div class="input-group-prepend">
+					<div class="input-group-text">Address</div>
+				</div>
+				<input type="text" class="form-control" id="currentAddress" name="currentAddress" #currentAddress="ngModel" [(ngModel)]="model.currentAddress">
+			</div>
+
+		</div>
+
+	</div>
+</form>
+<div class="etabs-tabgroup" style="position: absolute; top: 38px">
+	<div class="etabs-tabs"></div>
+	<div class="etabs-buttons"></div>
 </div>
+<div class="etabs-views"></div>
