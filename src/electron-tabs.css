@@ -26,7 +26,11 @@
     font: caption;
     font-size: 14px;
     background-color: #ccc;
-    cursor: default;
+	cursor: default;
+	max-width: 100px;
+	white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Dragula */

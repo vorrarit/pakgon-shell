@@ -2,9 +2,20 @@
 	<div class="form-row" style="margin-right:1px; margin-left:1px">
 		<div class="col-auto">
 			<div class="btn-group btn-group-sm mt-1 mr-1 ml-1 mb-1" role="group" aria-label="Basic example">
-				<button type="button" class="btn btn-secondary">Left</button>
-				<button type="button" class="btn btn-secondary">Middle</button>
-				<button type="button" class="btn btn-secondary">Right</button>
+				<button type="button" class="btn btn-default" *ngIf="canGoBack" (click)="back()"><span class="oi oi-chevron-left"></span></button>
+				<button type="button" class="btn btn-default disabled" disabled *ngIf="!canGoBack">
+					<span class="oi oi-chevron-left"></span>
+				</button>
+				<button type="button" class="btn btn-default" *ngIf="canGoForward" (click)="forward()"><span class="oi oi-chevron-right"></span></button>
+				<button type="button" class="btn btn-default" *ngIf="!canGoForward" disabled>
+					<span class="oi oi-chevron-right"></span>
+				</button>
+				<button type="button" class="btn btn-default" (click)="reload()" *ngIf="!isLoading">
+					<span class="oi oi-reload"></span>
+				</button>
+				<button type="button" class="btn btn-default" (click)="stop()" *ngIf="isLoading">
+					<span class="oi oi-ban"></span>
+				</button>
 			</div>
 		</div>
 		<div class="col">
@@ -13,6 +24,12 @@
 					<div class="input-group-text">Address</div>
 				</div>
 				<input type="text" class="form-control" id="currentAddress" name="currentAddress" #currentAddress="ngModel" [(ngModel)]="model.currentAddress">
+				<div class="input-group-append">
+					<div class="input-group-text">
+						<div class="overlay-loader" *ngIf="isLoading"></div>
+						<span class="oi oi-link-intact" *ngIf="!isLoading"></span>
+					</div>	
+				</div>
 			</div>
 
 		</div>
@@ -21,6 +38,9 @@
 </form>
 <div class="etabs-tabgroup" style="position: absolute; top: 38px">
 	<div class="etabs-tabs"></div>
-	<div class="etabs-buttons"></div>
+	<div class="etabs-buttons">
+		<button type="button" (click)="newTab()"><span class="oi oi-plus"></span></button>
+		<button type="button" (click)="toggleDevTools()"><span class="oi oi-beaker"></span></button>
+	</div>
 </div>
 <div class="etabs-views"></div>
