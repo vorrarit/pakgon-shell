@@ -27,7 +27,7 @@
     font-size: 14px;
     background-color: #ccc;
 	cursor: default;
-	max-width: 100px;
+	max-width: 120px;
 	white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;

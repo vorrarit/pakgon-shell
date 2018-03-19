@@ -6,6 +6,8 @@
 /out-tsc
 /app-builds
 main.js
+browser-config.js
+browser-config.json
 
 # dependencies
 /node_modules
