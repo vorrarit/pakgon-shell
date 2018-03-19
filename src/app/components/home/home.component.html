@@ -21,9 +21,9 @@
 		<div class="col">
 			<div class="input-group input-group-sm mt-1 mb-1 mr-3">
 				<div class="input-group-prepend">
-					<div class="input-group-text">Address</div>
+					<div class="input-group-text" style="user-select: none">Address</div>
 				</div>
-				<input type="text" class="form-control" id="currentAddress" name="currentAddress" #currentAddress="ngModel" [(ngModel)]="model.currentAddress">
+				<input type="text" class="form-control" id="currentAddress" name="currentAddress" #currentAddress="ngModel" [(ngModel)]="model.currentAddress" (click)="focusAddressBar()">
 				<div class="input-group-append">
 					<div class="input-group-text">
 						<div class="overlay-loader" *ngIf="isLoading"></div>

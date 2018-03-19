@@ -3,6 +3,7 @@ import * as TabGroup from 'electron-tabs';
 import { ElectronService } from '../../providers/electron.service';
 import * as url from 'url';
 import { WebContents } from 'electron';
+import { EsubmissionRequestHandler } from '../../esubmission/esubmission-request-handler';
 
 @Component({
   selector: 'app-home',
@@ -22,9 +23,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 	constructor(private cdRef: ChangeDetectorRef, private renderer: Renderer2, private electronService:ElectronService) { }
 
 	get isLoading(): boolean {
-		if (this.activeTab)
-			if (this.activeTab.webview.isLoading)	
+		if (this.activeTab && this.activeTab.webview.isLoading) {
+			try {
 				return this.activeTab.webview.isLoading();
+			} catch (e) { }
+			
+		}
 
 		return false;	
 	}
@@ -85,21 +89,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 				console.log('will navigate', e);
 				let willNavigateUrl = url.parse(e.url);
 				if (willNavigateUrl.hostname == 'eadj-uat.pakgon.com') {
-					if (willNavigateUrl.pathname == '/Apis/document/create') {
-						console.log(willNavigateUrl.protocol + '//' + willNavigateUrl.hostname);
-						let session: Electron.Session = e.target.getWebContents().session;
-						session.cookies.get({ url: willNavigateUrl.protocol + '//' + willNavigateUrl.hostname }, (error, cookies) => {
-							let cookieStr = ''
-							for (var i = 0; i < cookies.length; i++) {
-								let info = cookies[i];
-								cookieStr += `${info.name}=${info.value};`;
-								console.log(info.value, info.name);
-							}
-							console.log(cookieStr);
-						})
-						// this.electronService.ipcRenderer.send('portal-create-document-request');
-						e.preventDefault();
-					}
+					let esubHandler = new EsubmissionRequestHandler();
+					esubHandler.handleWillNavigate(e, this.electronService);
 				}
 			});
 			tab.webview.addEventListener('did-navigate', e => {
@@ -129,19 +120,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
 	ngAfterViewInit() {
 		// init shortcuts
 		this.electronService.ipcRenderer.on('browser-address-bar-request', () => {
-			this.renderer.selectRootElement('#currentAddress').select();
+			this.focusAddressBar();
 		});
 	}
+
 	// ngAfterViewChecked() {
 	// 	this.cdRef.detectChanges();
 	// }
+
+	focusAddressBar() {
+		this.renderer.selectRootElement('#currentAddress').select();
+	}
 
 	newTab() {
 		this.tabGroup.addTab({
 			title: 'about:blank',
 			src: 'about:blank',
 			visible: true,
-			active: true
+			active: true,
+			// webviewAttributes: {
+			// 	useragent: 'PortalBrowser/2.5.0'
+			// }
 		});
 	}
 
