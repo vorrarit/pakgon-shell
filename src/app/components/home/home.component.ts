@@ -158,12 +158,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 	}
 
 	loadTabs() {
-		this.electronService.ipcRenderer.once('browser-load-tabs-response', tabsConfig => {
+		this.electronService.ipcRenderer.once('browser-load-tabs-response', (event, tabsConfig) => {
 			if (this.tabGroup) {
 				if (tabsConfig && tabsConfig.length > 0) {
 					for (let i = 0; i < tabsConfig.length; i++) {
 						this.tabGroup.addTab({
-							src: tabsConfig.tabUrl,
+							src: tabsConfig[i].tabUrl,
 							visible: true,
 							active: true
 						});

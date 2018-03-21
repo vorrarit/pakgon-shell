@@ -13,13 +13,12 @@ export class BrowserConfig {
 	}
 
 	private constructor() {
-		fs.readFile(this.configFileName, (err, data) => {
-			if (err) {
-				fs.writeFileSync(this.configFileName, JSON.stringify(this.config));
-			} else {
-				this.config = JSON.parse(data.toString());
-			}
-		});
+		let data = fs.readFileSync(this.configFileName);
+		if (!data) {
+			fs.writeFileSync(this.configFileName, JSON.stringify(this.config));
+		} else {
+			this.config = JSON.parse(data.toString());
+		}
 	}
 
 	public set(key: string, value: any) {
